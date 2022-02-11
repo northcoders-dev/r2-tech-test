@@ -1,8 +1,9 @@
 exports.ingredientsStringCreator = (ingredients) => {
-  const ingredientsArrayString = "ARRAY[";
+  let ingredientsArrayString = "ARRAY[";
   ingredients.forEach((ingredient) => {
-    ingredientsArrayString += `[${ingredient.name}, '${ingredient.grams}']`;
+    ingredientsArrayString += `['${ingredient.name}', '${ingredient.grams}'], `;
   });
+  ingredientsArrayString = ingredientsArrayString.slice(0, -2);
   ingredientsArrayString += `]`;
   return ingredientsArrayString;
 };
