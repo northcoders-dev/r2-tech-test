@@ -1,4 +1,5 @@
 const db = require("../index.js");
+const { ingredientsStringCreator } = require("../../utils/utils.js");
 
 const seed = (data) => {
   return db
@@ -19,17 +20,11 @@ const seed = (data) => {
           `INSERT INTO recipes(id, imageUrl, instructions, ingredients) VALUES %L RETURNING *;`
         ),
         data.map((recipe) => {
-          const ingredientsArrayString = "ARRAY[";
-          recipe.ingredients.forEach((ingredient) => {
-            ingredientsArrayString += `[${ingredient.name}, '${ingredient.grams}']`;
-          });
-          ingredientsArrayString += `]`;
-
           return [
             recipe.id,
             recipe.imageUrl,
             recipe.instructions,
-            ingredientsArrayString,
+            ingredientsStringCreator(recipe.ingredients),
           ];
         })
       );
